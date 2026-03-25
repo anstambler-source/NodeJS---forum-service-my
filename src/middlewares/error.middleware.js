@@ -7,7 +7,7 @@ const errorHandler = (err, req, res, next) => {
             "timestamp": new Date().toISOString(),
             "status": 404,
             "error": "Not Found",
-            "message": `Post with id = ${req.params.id} not found`,
+            "message": `Post with id = ${err.id} not found`,
             "path": req.path
         });
     }
