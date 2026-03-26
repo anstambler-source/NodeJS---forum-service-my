@@ -9,10 +9,11 @@ const postSchema = new mongoose.Schema({
     likes: {type: Number, default: 0},
     comments: {
         type: [{
+            _id: false,
             user: {type: String, required: true},
             message: {type: String,required: true},
             dateCreated: {type: String},
-            likes: {type: Number},
+            likes: {type: Number, default: 0},
         }], default: []
     }
 }, {

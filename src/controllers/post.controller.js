@@ -20,38 +20,66 @@ class PostController {
     }
 
     async deletePost(req, res, next) {
-        // todo handle service post deletion
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.deletePost(req.params.id);
+            return res.status(200).json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async addLike(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            await postService.addLike(req.params.id);
+            return res.status(204).send();
+        }catch(e){
+            return next(e);
+        }
     }
 
     async getPostsByAuthor(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.getPostsByAuthor(req.params.author);
+            return res.status(200).json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async addComment(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.addComment(req.params.id, {user: req.params.commenter, ...req.body});
+            return res.status(200).json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async getPostsByTags(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const posts = await postService.findPostsByTags(Array.isArray(req.query.values) ? req.query.values : [req.query.values]);
+            return res.status(200).json(posts);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async getPostsByPeriod(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const posts = await postService.findPostsByPeriod(req.query.dateFrom, req.query.dateTo);
+            return res.status(200).json(posts);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async updatePost(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.updatePost(req.params.id, req.body);
+            return res.status(200).json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 }
 
