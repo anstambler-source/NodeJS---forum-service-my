@@ -1,7 +1,8 @@
 import Joi from 'joi'
+import {CREATE_POST} from "../utils/constants.js";
 
 const schemas = {
-    createPost: Joi.object({
+    [CREATE_POST]: Joi.object({
         title: Joi.string().required(),
         content: Joi.string().required(),
         tags: Joi.array().items(Joi.string())

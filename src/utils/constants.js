@@ -1,0 +1,9 @@
+export const CREATE_POST = 'createPost';
+export const GET_POST_BY_ID = 'getPostById';
+export const DELETE_POST = 'deletePost';
+export const ADD_LIKE = 'addLike';
+export const GET_POST_BY_AUTHOR = 'getPostsByAuthor';
+export const ADD_COMMENT = 'addComment';
+export const GET_POST_BY_TAGS = 'getPostsByTags';
+export const GET_POST_BY_PEROID = 'getPostsByPeriod';
+export const UPDATE_POST = 'updatePost';

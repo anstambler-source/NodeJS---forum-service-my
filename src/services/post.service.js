@@ -1,5 +1,13 @@
 import postRepository from "../repositories/post.repository.js";
 
+async function checkPostAndReturnResult(id, callback, data) {
+    const post = await callback(id, data)
+    if (!post) {
+        throw new Error(`Post with id = ${id} not found`)
+    }
+    return post
+}
+
 class PostService {
     async createPost(author, data) {
         const tags = [...new Set(data.tags)]
@@ -7,49 +15,41 @@ class PostService {
     }
 
     async getPostById(id) {
-            const post = await postRepository.findPostById(id)
-            if (!post) {
-                throw new Error(`Post with id = ${id} not found`)
-            }
-            return post
+        return checkPostAndReturnResult(id, postRepository.findPostById)
     }
 
     async deletePost(id) {
-        const post = await postRepository.deletePost(id)
-        if (!post) {
-            throw new Error(`Post with id = ${id} not found`)
-        }
-        return post
+        return checkPostAndReturnResult(id, postRepository.deletePost)
     }
 
     async addLike(id) {
-        // todo
-        throw new Error('Not implemented');
+        const post = await postRepository.addLike(id)
+        if (!post.matchedCount) {
+            throw new Error(`Post with id = ${id} not found`)
+        }
     }
 
     async getPostsByAuthor(author) {
-        // todo
-        throw new Error('Not implemented');
+        return postRepository.getPostsByAuthor(author)
     }
 
-    async addComment(id, commenter, content) {
-        // todo
-        throw new Error('Not implemented');
+    async addComment(id, data) {
+        return checkPostAndReturnResult(id, postRepository.addComment, data)
     }
 
     async getPostsByTags(tagsString) {
-        // todo
-        throw new Error('Not implemented');
+        const tagsIgnoreCase = tagsString?.split(',').map(tag => new RegExp(`^${tag}$`, 'i'))
+        return postRepository.getPostsByTags(tagsIgnoreCase)
     }
 
     async getPostsByPeriod(dateFrom, dateTo) {
-        // todo
-        throw new Error('Not implemented');
+        const msFrom = new Date(dateFrom)
+        const msTo = new Date(dateTo).setHours(23, 59, 59, 999)
+        return postRepository.getPostsByPeriod(msFrom, msTo)
     }
 
     async updatePost(id, data) {
-        // todo
-        throw new Error('Not implemented');
+        return checkPostAndReturnResult(id, postRepository.updatePost, data)
     }
 }
 

@@ -29,33 +29,57 @@ class PostController {
     }
 
     async addLike(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            await postService.addLike(req.params.id);
+            return res.status(204).send();
+        }catch(e){
+            return next(e);
+        }
     }
 
     async getPostsByAuthor(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.getPostsByAuthor(req.params.author);
+            return res.json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async addComment(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.addComment(req.params.id, {...req.body, user: req.params.commenter});
+            return res.json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async getPostsByTags(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const posts = await postService.getPostsByTags(req.query.values);
+            return res.json(posts);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async getPostsByPeriod(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const posts = await postService.getPostsByPeriod(req.query.dateFrom, req.query.dateTo);
+            return res.json(posts);
+        }catch(e){
+            return next(e);
+        }
     }
 
     async updatePost(req, res, next) {
-        // todo
-        throw new Error('Not implemented');
+        try{
+            const post = await postService.updatePost(req.params.id, req.body);
+            return res.json(post);
+        }catch(e){
+            return next(e);
+        }
     }
 }
 

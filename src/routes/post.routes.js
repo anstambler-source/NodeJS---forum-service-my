@@ -1,10 +1,11 @@
 import {Router} from 'express';
 import postController from "../controllers/post.controller.js";
 import validate from "../middlewares/validation.middleware.js";
+import {CREATE_POST} from "../utils/constants.js";
 
 const router = Router();
 
-router.post('/post/:author', validate('createPost'), postController.createPost);
+router.post('/post/:author', validate(CREATE_POST), postController.createPost);
 router.get('/post/:id', postController.getPostById)
 router.delete('/post/:id', postController.deletePost);
 router.patch('/post/:id/like', postController.addLike)
