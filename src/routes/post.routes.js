@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import postController from "../controllers/post.controller.js";
 import validate from "../middlewares/validation.middleware.js";
-import {CREATE_POST} from "../utils/constants.js";
+import {ADD_COMMENT, CREATE_POST, GET_POSTS_BY_PERIOD, UPDATE_POST} from "../utils/constants.js";
 
 const router = Router();
 
@@ -10,9 +10,9 @@ router.get('/post/:id', postController.getPostById)
 router.delete('/post/:id', postController.deletePost);
 router.patch('/post/:id/like', postController.addLike)
 router.get('/posts/author/:author', postController.getPostsByAuthor)
-router.patch('/post/:id/comment/:commenter', postController.addComment)
+router.patch('/post/:id/comment/:commenter', validate(ADD_COMMENT), postController.addComment)
 router.get('/posts/tags', postController.getPostsByTags)
-router.get('/posts/period', postController.getPostsByPeriod)
-router.patch('/post/:id', postController.updatePost)
+router.get('/posts/period', validate(GET_POSTS_BY_PERIOD), postController.getPostsByPeriod)
+router.patch('/post/:id', validate(UPDATE_POST), postController.updatePost)
 
 export default router;

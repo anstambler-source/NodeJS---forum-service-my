@@ -8,6 +8,7 @@ async function checkPostAndReturnResult(id, callback, data) {
     return post
 }
 
+
 class PostService {
     async createPost(author, data) {
         const tags = [...new Set(data.tags)]
