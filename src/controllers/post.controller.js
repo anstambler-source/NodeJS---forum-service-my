@@ -55,7 +55,6 @@ class PostController {
         if(Array.isArray(req.query.values)){
             values = req.query.values.join(',')
         }
-        console.log(values)
         return res.json(await postService.getPostsByTags(values));
     }
 

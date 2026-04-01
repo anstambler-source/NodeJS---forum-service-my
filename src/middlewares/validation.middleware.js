@@ -17,7 +17,7 @@ const schemas = {
     dateFormat: Joi.object({
         dateFrom: Joi.date().iso().required(),
         dateTo: Joi.date().iso().required().greater(Joi.ref('dateFrom')),
-    }),
+    })
 }
 
 const validate = (schemaName, target = 'body') => (req, res, next) => {
