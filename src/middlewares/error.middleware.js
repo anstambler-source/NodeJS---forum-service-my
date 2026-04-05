@@ -11,13 +11,23 @@ const errorHandler = (err, req, res, next) => {
             "path": req.path
         });
     }
-    return res.status(500).json({
-        "timestamp": new Date().toISOString(),
-        "status": 500,
-        "error": "Internal Server Error",
+    const status = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    return res.status(status).json({
+        message,
+        "error": err.name,
+        status,
         "path": req.path,
-        "message": err.message
+        "timestamp": new Date().toISOString(),
     })
+
+    // return res.status(500).json({
+    //     "timestamp": new Date().toISOString(),
+    //     "status": 500,
+    //     "error": "Internal Server Error",
+    //     "path": req.path,
+    //     "message": err.message
+    // })
 }
 
 export default errorHandler;
