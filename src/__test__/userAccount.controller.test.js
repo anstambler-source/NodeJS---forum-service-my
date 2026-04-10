@@ -12,7 +12,7 @@ jest.unstable_mockModule('../services/userAccount.service.js', () => ({
     default: userAccountServiceMock
 }));
 
-const {default: userAccountController} = await import('./userAccount.controller.js');
+const {default: userAccountController} = await import('../controllers/userAccount.controller.js');
 
 const createRes = () => {
     const res = {
