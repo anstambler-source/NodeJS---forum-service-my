@@ -45,12 +45,19 @@ const userAccountSchema = new Schema({
     }
 });
 
-userAccountSchema.pre('save', async function (next) {
+userAccountSchema.pre('save', async function () {
     if (this.isModified('password')) {
-        const salt = await bcrypt.genSalt(12);
-        this.password = await bcrypt.hash(this.password, salt);
+        this.password = await bcrypt.hash(this.password, 12);
     }
 })
+
+// userAccountSchema.pre('findOneAndUpdate', async function () {
+//     const update = this.getUpdate();
+//
+//     if (update.$set?.password) {
+//         update.$set.password = await bcrypt.hash(update.$set.password, 12);
+//     }
+// });
 
 
 export default model('UserAccount', userAccountSchema, 'users');

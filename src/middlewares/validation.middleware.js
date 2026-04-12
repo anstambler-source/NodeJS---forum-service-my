@@ -17,6 +17,20 @@ const schemas = {
     dateFormat: Joi.object({
         dateFrom: Joi.date().iso().required(),
         dateTo: Joi.date().iso().required().greater(Joi.ref('dateFrom')),
+    }),
+    userRegister: Joi.object({
+        login: Joi.string().required(),
+        password: Joi.string().required(),
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+    }),
+    userUpdate: Joi.object({
+        firstName: Joi.string(),
+        lastName: Joi.string()
+    }),
+    addRole: Joi.object({
+        login: Joi.string().required(),
+        role: Joi.string().valid('user', 'admin', 'moderator').insensitive().uppercase().required(),
     })
 }
 
