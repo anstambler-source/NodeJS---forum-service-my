@@ -11,8 +11,8 @@ class UserAccountController {
     }
 
     async login(req, res, next) {
-        // TODO: Implement user login logic
-        throw new Error('Not implemented');
+        const userAccount = await userAccountService.getUser(req.principal.userName)
+        return res.json(userAccount);
     }
 
     async deleteUser(req, res, next) {
@@ -54,8 +54,8 @@ class UserAccountController {
     }
 
     async changePassword(req, res, next) {
-        // TODO: Implement password change logic
-        throw new Error('Not implemented');
+        await userAccountService.changePassword(req.principal.userName, req.body.password)
+        return res.sendStatus(204)
     }
 
     async getUser(req, res, next) {

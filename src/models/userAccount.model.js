@@ -1,5 +1,6 @@
 import {Schema, model} from 'mongoose';
 import bcrypt from 'bcrypt';
+import {USER} from "../configuration/constants.js";
 
 const userAccountSchema = new Schema({
     _id: {
@@ -21,7 +22,7 @@ const userAccountSchema = new Schema({
     },
     roles: {
         type: [String],
-        default: ['USER']
+        default: [USER]
     }
 }, {
     versionKey: false,
@@ -45,12 +46,16 @@ const userAccountSchema = new Schema({
     }
 });
 
-userAccountSchema.pre('save', async function (next) {
+userAccountSchema.pre('save', async function () {
     if (this.isModified('password')) {
         const salt = await bcrypt.genSalt(12);
         this.password = await bcrypt.hash(this.password, salt);
     }
 })
+
+userAccountSchema.methods.comparePassword = async function (plainTextPassword) {
+    return bcrypt.compare(plainTextPassword, this.password);
+}
 
 
 export default model('UserAccount', userAccountSchema, 'users');
