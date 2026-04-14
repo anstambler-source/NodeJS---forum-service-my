@@ -1,7 +1,7 @@
 import userAccountService from "../services/userAccount.service.js";
 
 class UserAccountController {
-    async register (req, res, next) {
+    async register(req, res, next) {
         try {
             const userAccount = await userAccountService.register(req.body);
             return res.status(201).json(userAccount);
@@ -10,32 +10,32 @@ class UserAccountController {
         }
     }
 
-    async login (req, res, next) {
-        // todo
-        throw new Error('Method not implemented.');
+    async login(req, res, next) {
+        // TODO: Implement user login logic
+        throw new Error('Not implemented');
     }
 
     async deleteUser(req, res, next) {
         try {
-            const userAccount = await userAccountService.removeUser(req.params.login)
+            const userAccount = await userAccountService.removeUser(req.params.login);
             return res.json(userAccount);
         } catch (err) {
             return next(err);
         }
     }
 
-    async updateUser (req, res, next) {
+    async updateUser(req, res, next) {
         try {
-            const userAccount = await userAccountService.updateUser(req.params.login, req.body)
+            const userAccount = await userAccountService.updateUser(req.params.login, req.body);
             return res.json(userAccount);
         } catch (err) {
             return next(err);
         }
     }
 
-    async addRole (req, res, next) {
+    async addRole(req, res, next) {
         try {
-            const userRoles = await userAccountService.changeRoles(req.params.login, req.params.role, true)
+            const userRoles = await userAccountService.changeRoles(req.params.login, req.params.role, true);
             return res.json(userRoles);
             // return res.json(userRoles.toJSON({hidePersonal: true}));
         } catch (err) {
@@ -43,9 +43,9 @@ class UserAccountController {
         }
     }
 
-    async deleteRole (req, res, next) {
+    async deleteRole(req, res, next) {
         try {
-            const userRoles = await userAccountService.changeRoles(req.params.login, req.params.role, false)
+            const userRoles = await userAccountService.changeRoles(req.params.login, req.params.role, false);
             return res.json(userRoles);
             // return res.json(userRoles.toJSON({hidePersonal: true}));
         } catch (err) {
@@ -53,15 +53,15 @@ class UserAccountController {
         }
     }
 
-    async changePassword (req, res, next) {
-        // todo
-        throw new Error('Method not implemented.');
+    async changePassword(req, res, next) {
+        // TODO: Implement password change logic
+        throw new Error('Not implemented');
     }
 
-    async getUser (req, res, next) {
+    async getUser(req, res, next) {
         try {
-            const userAccount = await userAccountService.getUser(req.params.login)
-            return res.json(userAccount);
+            const user = await userAccountService.getUser(req.params.login);
+            return res.json(user);
         } catch (err) {
             return next(err);
         }
