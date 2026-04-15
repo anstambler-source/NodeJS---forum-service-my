@@ -7,16 +7,20 @@ import userAccountRoutes from "./routes/userAccount.routes.js";
 import authentication from "./middlewares/authentication.middleware.js";
 import {createAdmin} from "./configuration/initAdmin.js";
 import authorization from "./middlewares/authorization.middleware.js";
-import {ADMIN} from "./configuration/constants.js";
+import {ADMIN, OWNER} from "./configuration/constants.js";
+import authenticationPosts from "./middlewares/authenticationPosts.middleware.js";
 
 const app = express();
 const authorizationRouter = Router()
 
 app.use(express.json());
 app.use(authentication)
+// app.use(authenticationPosts)
 // authorizationRouter.patch('/account/user/:login/role/:role', authorization.hasRole(ADMIN));
 // authorizationRouter.delete('/account/user/:login/role/:role', authorization.hasRole(ADMIN));
 authorizationRouter.all('/account/user/:login/role/:role', authorization.hasRole(ADMIN))
+authorizationRouter.delete('/account/user/:login', authorization.hasRole(ADMIN, OWNER))
+authorizationRouter.patch('/account/user/:login', authorization.hasRole(null, OWNER))
 
 app.use(authorizationRouter);
 app.use('/forum', postRoutes)
